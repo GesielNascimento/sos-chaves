@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema S.O.S Chaves - Gestão Hospitalar Inteligente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #038d1a 0%, #033a01 100%);
+            background-color: #01702f;
+            color: rgb(255, 255, 255);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #154101 0%, #97fd8e 100%);
+            color: white;
+            padding: 8rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #26dd4b, #01702f);
+            color: white;
+            transform: translateY(0);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-3px);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #0dbd07;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* Modules Section */
+        .modules {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .modules-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .module-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, #9cf5a0, #0d7e02);
+            color: white;
+            text-align: center;
+        }
+
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .module-subtitle {
+            opacity: 0.9;
+        }
+
+        .module-content {
+            padding: 2rem;
+        }
+
+        .module-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .module-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .module-features li::before {
+            content: '✅';
+            font-size: 1.2rem;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: linear-gradient(135deg, #1a7726 0%, #77ff89 100%);
+            color: white;
+            padding: 6rem 2rem;
+        }
+
+        .benefits-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .benefits .section-title,
+.benefits .section-subtitle {
+    color: white;
+}
+
+        /* Timeline Section */
+        .timeline {
+            padding: 6rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            margin-left: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 2rem;
+            width: 20px;
+            height: 20px;
+            background: #137e0f;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px #2d9c23;
+        }
+
+        .timeline-week {
+            color: #0ca52d;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #39a848 0%, #037920 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #02490e;
+            color: white;
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #81ec81;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                margin-left: 1rem;
+            }
+
+            .timeline-item::before {
+                left: -1rem;
+            }
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                🚑 S.O.S Chaves
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#modulos">Módulos</a></li>
+                <li><a href="#beneficios">Benefícios</a></li>
+                <li><a href="#cronograma">Cronograma</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1 class="floating">Sistema S.O.S Chaves</h1>
+            <p class="hero-subtitle">Plataforma Digital para Gestão de Resgates Médicos</p>
+            <p class="hero-description">
+                Solução integrada que revoluciona a gestão hospitalar em Chaves/PA, 
+                conectando resgates, regulação urbana e agendamento laboratorial em uma única plataforma.
+            </p>
+            <div class="cta-buttons">
+                <a href="#modulos" class="btn btn-primary">
+                    🔍 Explorar Funcionalidades
+                </a>
+                <a href="#contato" class="btn btn-secondary">
+                    📞 Falar com Especialista
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-card reveal">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">Redução no Tempo de Processamento</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Rastreabilidade dos Atendimentos</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-number">80%</div>
+                <div class="stat-label">Redução nas Filas</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Suporte Técnico</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section id="modulos" class="modules">
+        <h2 class="section-title reveal">Módulos Integrados</h2>
+        <p class="section-subtitle reveal">
+            Três pilares fundamentais que transformam a gestão hospitalar em Chaves
+        </p>
+        
+        <div class="modules-grid">
+            <!-- Módulo Resgates -->
+            <div class="module-card reveal">
+                <div class="module-header">
+                    <div class="module-icon">🚤</div>
+                    <h3 class="module-title">Gestão de Resgates</h3>
+                    <p class="module-subtitle">Interior - Comunidades Insulares</p>
+                </div>
+                <div class="module-content">
+                    <ul class="module-features">
+                        <li>Solicitações estruturadas via app</li>
+                        <li>Anexo de fotos/vídeos do quadro clínico</li>
+                        <li>Regulação em tempo real</li>
+                        <li>Rastreamento completo do resgate</li>
+                        <li>Histórico completo do paciente</li>
+                        <li>Relatórios automáticos</li>
+                    </ul>
+                    <a href="#contato" class="btn btn-primary">Saiba Mais</a>
+                </div>
+            </div>
+
+            <!-- Módulo Regulação -->
+            <div class="module-card reveal">
+                <div class="module-header">
+                    <div class="module-icon">🏥</div>
+                    <h3 class="module-title">Regulação Urbana</h3>
+                    <p class="module-subtitle">Cidade - Atendimentos Locais</p>
+                </div>
+                <div class="module-content">
+                    <ul class="module-features">
+                        <li>Interface padronizada com resgates</li>
+                        <li>Acionamento de ambulâncias</li>
+                        <li>Regulação centralizada</li>
+                        <li>Otimização de recursos urbanos</li>
+                        <li>Integração total com o sistema</li>
+                        <li>Relatórios unificados</li>
+                    </ul>
+                    <a href="#contato" class="btn btn-primary">Saiba Mais</a>
+                </div>
+            </div>
+
+            <!-- Módulo Laboratório -->
+            <div class="module-card reveal">
+                <div class="module-header">
+                    <div class="module-icon">🧪</div>
+                    <h3 class="module-title">Agendamento Laboratório</h3>
+                    <p class="module-subtitle">Eliminação Total das Filas</p>
+                </div>
+                <div class="module-content">
+                    <ul class="module-features">
+                        <li>Agendamento via app ou totem</li>
+                        <li>Acesso remoto para Atenção Básica</li>
+                        <li>Comprovantes digitais automáticos</li>
+                        <li>Lembretes via SMS</li>
+                        <li>Gestão de capacidade laboratorial</li>
+                        <li>Controle de cotas por unidade</li>
+                    </ul>
+                    <a href="#contato" class="btn btn-primary">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="beneficios" class="benefits">
+        <div class="benefits-container">
+            <h2 class="section-title reveal">Benefícios Transformadores</h2>
+            <p class="section-subtitle reveal">
+                Impacto direto na vida da população e eficiência dos serviços
+            </p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card reveal">
+                    <div class="benefit-icon">⚡</div>
+                    <h3 class="benefit-title">Resposta Rápida</h3>
+                    <p>Redução de 60% no tempo de resposta às emergências, salvando vidas nas comunidades mais isoladas.</p>
+                </div>
+                
+                <div class="benefit-card reveal">
+                    <div class="benefit-icon">📊</div>
+                    <h3 class="benefit-title">Gestão Inteligente</h3>
+                    <p>Relatórios automáticos e controle total de todos os processos hospitalares em tempo real.</p>
+                </div>
+                
+                <div class="benefit-card reveal">
+                    <div class="benefit-icon">🎯</div>
+                    <h3 class="benefit-title">Eficiência Operacional</h3>
+                    <p>Eliminação de retrabalhos, otimização de recursos e padronização de todos os procedimentos.</p>
+                </div>
+                
+                <div class="benefit-card reveal">
+                    <div class="benefit-icon">🔒</div>
+                    <h3 class="benefit-title">Segurança Total</h3>
+                    <p>Conformidade com LGPD, backup automático e segurança jurídica para o município.</p>
+                </div>
+                
+                <div class="benefit-card reveal">
+                    <div class="benefit-icon">💰</div>
+                    <h3 class="benefit-title">Economia de Recursos</h3>
+                    <p>Redução significativa de custos operacionais e otimização do uso de equipamentos.</p>
+                </div>
+                
+                <div class="benefit-card reveal">
+                    <div class="benefit-icon">🌟</div>
+                    <h3 class="benefit-title">Referência Regional</h3>
+                    <p>Chaves se torna modelo de gestão de saúde pública para toda a região amazônica.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="cronograma" class="timeline">
+        <h2 class="section-title reveal">Cronograma de Implementação</h2>
+        <p class="section-subtitle reveal">
+            Do desenvolvimento ao go-live em apenas 90 dias
+        </p>
+        
+        <div class="timeline-container">
+            <div class="timeline-item reveal">
+                <div class="timeline-week">Semanas 1-2</div>
+                <h3 class="timeline-title">Aprovação e Contratação</h3>
+                <p>Aprovação da proposta pela Secretaria de Saúde e assinatura do contrato de desenvolvimento.</p>
+            </div>
+            
+            <div class="timeline-item reveal">
+                <div class="timeline-week">Semanas 3-14</div>
+                <h3 class="timeline-title">Desenvolvimento dos Módulos Principais</h3>
+                <p>Desenvolvimento dos módulos de Resgates e Regulação Urbana com testes integrados.</p>
+            </div>
+            
+            <div class="timeline-item reveal">
+                <div class="timeline-week">Semanas 15-18</div>
+                <h3 class="timeline-title">Módulo Laboratorial</h3>
+                <p>Desenvolvimento completo do sistema de agendamento laboratorial e integração final.</p>
+            </div>
+            
+            <div class="timeline-item reveal">
+                <div class="timeline-week">Semanas 19-22</div>
+                <h3 class="timeline-title">Testes e Treinamento</h3>
+                <p>Testes finais de segurança, treinamento completo das equipes e preparação para go-live.</p>
+            </div>
+            
+            <div class="timeline-item reveal">
+                <div class="timeline-week">Semana 23</div>
+                <h3 class="timeline-title">Go-Live e Operação</h3>
+                <p>Início da operação completa com suporte técnico 24/7 e monitoramento intensivo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="contact">
+        <div class="contact-content">
+            <h2 class="reveal">Pronto para Revolucionar a Saúde em Chaves?</h2>
+            <p class="reveal">
+                O Sistema S.O.S Chaves está pronto para transformar a gestão hospitalar 
+                e salvar vidas nas comunidades mais isoladas do Marajó.
+            </p>
+            <div class="cta-buttons reveal">
+                <a href="mailto:contato@soschaves.com" class="btn btn-primary">
+                    📧 Solicitar Proposta Detalhada
+                </a>
+                <a href="tel:+5591999999999" class="btn btn-secondary">
+                    📞 Agendar Apresentação
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#inicio">Início</a>
+                <a href="#modulos">Módulos</a>
+                <a href="#beneficios">Benefícios</a>
+                <a href="#cronograma">Cronograma</a>
+                <a href="#contato">Contato</a>
+            </div>
+            <p>&copy; 2025 Sistema S.O.S Chaves. Conectando Vidas, Salvando Futuros.</p>
+            <p><em>"Tecnologia a serviço da vida nas águas do Marajó"</em></p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(25, 135, 84, 0.95)';
+                header.style.backdropFilter = 'blur(20px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #0f5132 0%, #198754 100%)';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        });
+
+        // Reveal animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        const animateCounter = (el, target) => {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                el.textContent = Math.floor(current) + (target === 95 || target === 80 ? '%' : target === 100 ? '%' : '');
+            }, 20);
+        };
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach((stat, index) => {
+                        const targets = [95, 100, 80, 24];
+                        setTimeout(() => {
+                            if (index === 3) {
+                                stat.textContent = '24/7';
+                            } else {
+                                animateCounter(stat, targets[index]);
+                            }
+                        }, index * 200);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Add floating animation to hero elements
+        const heroElements = document.querySelectorAll('.floating');
+        heroElements.forEach((el, index) => {
+            el.style.animationDelay = `${index * 0.2}s`;
+        });
+
+        // Mobile menu toggle (if needed)
+        const createMobileMenu = () => {
+            if (window.innerWidth <= 768) {
+                // Add mobile menu functionality here if needed
+                console.log('Mobile view active');
+            }
+        };
+
+        window.addEventListener('resize', createMobileMenu);
+        createMobileMenu();
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const rate = scrolled * -0.5;
+            
+            if (hero) {
+                hero.style.transform = `translateY(                ${rate}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
