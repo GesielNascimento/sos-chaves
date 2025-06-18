@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer utilities {
+  @keyframes zoom-slow {
+    0% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1.2);
+    }
+  }
+
+  .animate-zoom-slow {
+    animation: zoom-slow 5s ease-in-out infinite alternate;
+  }
+}
