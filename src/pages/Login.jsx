@@ -1,6 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Aqui futuramente você pode validar o login
+    navigate('/admin');
+  };
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden text-white">
       {/* Fundo com imagem e camada verde */}
@@ -23,7 +32,7 @@ export default function Login() {
 
         <h2 className="text-center text-lg sm:text-xl font-semibold mb-6">Acesso ao Sistema</h2>
 
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="block mb-1 text-sm font-medium">E-mail</label>
             <input
