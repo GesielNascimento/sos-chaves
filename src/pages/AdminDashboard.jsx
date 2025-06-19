@@ -37,30 +37,33 @@ export default function AdminDashboard() {
                     <Link to="/resgates" className="menu-item">
             🧑‍⚕️ Resgates
           </Link>
-          <a
-            href="#"
+
+          <Link
+            to="/exames"
             className="flex items-center gap-2 hover:bg-emerald-700 p-2 rounded"
           >
-            <FiCalendar /> Exames
-          </a>
+            <FiClipboard /> Exames
+          </Link>
           <a
             href="#"
             className="flex items-center gap-2 hover:bg-emerald-700 p-2 rounded"
           >
             <FiBarChart2 /> Relatórios
           </a>
-          <a
-            href="#"
+          
+          <Link
+            to="/configuracoes"
             className="flex items-center gap-2 hover:bg-emerald-700 p-2 rounded"
           >
             <FiSettings /> Configurações
-          </a>
-          <a
-            href="#"
+          </Link>
+
+          <Link
+            to="/"
             className="flex items-center gap-2 hover:bg-red-700 p-2 rounded"
           >
             <FiLogOut /> Sair
-          </a>
+          </Link>
         </nav>
       </aside>
 
