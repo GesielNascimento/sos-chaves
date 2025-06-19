@@ -34,12 +34,9 @@ export default function AdminDashboard() {
             <FiUsers /> Usuários
           </Link>
 
-          <a
-            href="#"
-            className="flex items-center gap-2 hover:bg-emerald-700 p-2 rounded"
-          >
-            <FiClipboard /> Resgates
-          </a>
+                    <Link to="/resgates" className="menu-item">
+            🧑‍⚕️ Resgates
+          </Link>
           <a
             href="#"
             className="flex items-center gap-2 hover:bg-emerald-700 p-2 rounded"
