@@ -9,6 +9,7 @@ import Usuarios from './pages/Usuarios.jsx';
 import Resgates from './pages/Resgates.jsx';
 import Exames from './pages/Exames';
 import Configuracoes from './pages/Configuracoes';
+import Home from './pages/Home';
 
 
 
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/resgates" element={<Resgates />} />
         <Route path="/exames" element={<Exames />} />
         <Route path="/configuracoes" element={<Configuracoes />} />
+        <Route path="/home" element={<Home />} />
 
       </Routes>
     </BrowserRouter>
